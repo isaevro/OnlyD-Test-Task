@@ -1,7 +1,18 @@
 import styled from 'styled-components'
+interface StyledInputTextProps {
+  errors: object
+}
 
-export const InputText = styled.div`
+export const InputText = styled.div<StyledInputTextProps>`
   margin-bottom: 20px;
+  p {
+    margin-top: 8px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #e26f6f;
+  }
   input {
     display: block;
     width: 100%;
@@ -14,9 +25,9 @@ export const InputText = styled.div`
     padding-left: 20px;
     font-size: 16px;
     line-height: 19px;
-    color: #232323;
+    color: ${(props) => (props.errors ? 'red' : '#232323')};
     &:focus {
-      outline: #232323 1px solid;
+      outline: ${(props) => (props.errors ? 'red' : '#232323')} 1px solid;
     }
   }
   label {

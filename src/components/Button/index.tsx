@@ -1,14 +1,20 @@
 import * as S from './styles'
 
 export interface ButtonProps {
-  type?: string
+  type?: 'button' | 'submit' | 'reset' | undefined
   disabled?: boolean
-  width: string
+  width?: string
   children: React.ReactNode
 }
 
 export const Button = (props: ButtonProps) => {
-  const { disabled = false, width = 100, children, type } = props
+  const { disabled = false, width = 100, children, type = 'button' } = props
 
-  return <S.Button>{children}</S.Button>
+  return (
+    <S.Button>
+      <button type={type} disabled={disabled}>
+        {children}
+      </button>
+    </S.Button>
+  )
 }
