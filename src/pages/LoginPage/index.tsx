@@ -2,10 +2,17 @@ import * as S from './styles'
 import { TextInput } from '../../components/TextInput'
 import { useForm } from 'react-hook-form'
 import { Button } from '../../components/Button'
-import { useState } from 'react'
+import { FC, useState } from 'react'
+import { Checkbox } from '../../components/Checkbox'
+import { Allert } from '../../components/Allert'
 
-const LoginPage = () => {
+interface Props {
+  onSuccessLogin: (name: string) => void
+}
+
+const LoginPage: FC<Props> = ({ onSuccessLogin }) => {
   const [errorFetch, setErrorFetch] = useState<string>('')
+  const [disabledButton, setDisabledButton] = useState<boolean>(false)
   const {
     register,
     formState: { errors },
@@ -13,13 +20,15 @@ const LoginPage = () => {
   } = useForm()
   const onSubmit = async (data: object) => {
     try {
+      setDisabledButton(true)
       const res: any = await new Promise((resolve) =>
         setTimeout(resolve, 1000),
       ).then(() => data)
       const isSteveJobs =
         res.login === 'steve.jobs@example.com' && res.password === 'password'
+      setDisabledButton(false)
       if (isSteveJobs) {
-        console.log('test')
+        onSuccessLogin(res.login)
       } else {
         throw new Error(
           res.login === 'steve.jobs@example.com'
@@ -33,11 +42,7 @@ const LoginPage = () => {
   }
   return (
     <S.Content>
-      {errorFetch && (
-        <span>
-          <p> {errorFetch}</p>
-        </span>
-      )}
+      {errorFetch && <Allert>{errorFetch}</Allert>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           errors={errors.login}
@@ -51,7 +56,12 @@ const LoginPage = () => {
           type={'password'}
           register={register}
         />
-        <Button type="submit" disabled={false}>
+        <Checkbox />
+        <Button
+          buttonColor={'#4A67FF'}
+          buttonTextColor={'white'}
+          type="submit"
+          disabled={disabledButton}>
           Войти
         </Button>
       </form>

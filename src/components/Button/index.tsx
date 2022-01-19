@@ -5,14 +5,28 @@ export interface ButtonProps {
   disabled?: boolean
   width?: string
   children: React.ReactNode
+  onClick?: () => void
+  buttonTextColor: string
+  buttonColor: string
 }
 
 export const Button = (props: ButtonProps) => {
-  const { disabled = false, width = 100, children, type = 'button' } = props
+  const {
+    onClick,
+    buttonTextColor,
+    buttonColor,
+    disabled = false,
+    width = '640px',
+    children,
+    type = 'button',
+  } = props
 
   return (
-    <S.Button>
-      <button type={type} disabled={disabled}>
+    <S.Button
+      buttonTextColor={buttonTextColor}
+      buttonColor={buttonColor}
+      width={width}>
+      <button onClick={onClick} type={type} disabled={disabled}>
         {children}
       </button>
     </S.Button>
