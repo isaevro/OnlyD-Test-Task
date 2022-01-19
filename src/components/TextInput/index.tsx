@@ -10,7 +10,6 @@ export interface InputTextProps {
 
 const InputTextComponent = (props: InputTextProps) => {
   const { type, placeholder, register, errors } = props
-  console.log(errors)
   return (
     <S.InputText errors={errors}>
       <label>{placeholder}</label>
